@@ -1,0 +1,59 @@
+using ScriptPortal.Vegas;
+using System;
+
+public class EntryPoint {
+    public void FromVegas(Vegas vegas) {
+        try {
+            // Get first video track and first event
+            Track track = vegas.Project.Tracks[0];
+            VideoEvent videoEvent = track.Events[0] as VideoEvent;
+
+            // Apply Hue Shift
+            Effect hueShift = videoEvent.Effects.AddEffect("Hue/Saturation");
+            hueShift.Parameters["Hue"].Value = 180.0; // degrees
+            hueShift.Parameters["Saturation"].Value = 50.0; // -100 to 100
+
+            // Apply Kaleidoscope
+            Effect kaleido = videoEvent.Effects.AddEffect("Kaleidoscope");
+            kaleido.Parameters["Slides"].Value = 50; // 0 to 100
+            kaleido.Parameters["Angle"].Value = 45.0; // degrees
+
+            // Apply Mirror
+            Effect mirror = videoEvent.Effects.AddEffect("Mirror");
+            mirror.Parameters["Enable"].Value = true;
+            mirror.Parameters["Angle"].Value = 90.0; // degrees
+
+            // Apply Swirl
+            Effect swirl = videoEvent.Effects.AddEffect("Swirl");
+            swirl.Parameters["Angle"].Value = -120.0; // -360 to 360
+
+            // Apply Channel Mixer
+            Effect mixer = videoEvent.Effects.AddEffect("Channel Mixer");
+            mixer.Parameters["Red"].Value = 0.8;
+            mixer.Parameters["Green"].Value = 0.6;
+            mixer.Parameters["Blue"].Value = 1.0;
+
+            // Apply LAB Adjust
+            Effect lab = videoEvent.Effects.AddEffect("LAB Adjust");
+            lab.Parameters["Lightness"].Value = 50.0; // 0 to 100
+            lab.Parameters["a"].Value = 25.0;         // 0 to 100
+            lab.Parameters["b"].Value = 75.0;         // 0 to 100
+
+            // Apply Invert
+            Effect invert = videoEvent.Effects.AddEffect("Invert");
+            invert.Parameters["Luminosity"].Value = true;
+
+            // Apply Waves
+            Effect wave = videoEvent.Effects.AddEffect("Waves");
+            wave.Parameters["Horizontal Waves"].Value = 3.1415; // 0 to 6.284
+            wave.Parameters["Vertical Waves"].Value = 2.5;
+            wave.Parameters["Horizontal Amplitude"].Value = 1.5;
+            wave.Parameters["Vertical Amplitude"].Value = 2.0;
+            wave.Parameters["Horizontal Phase"].Value = 0.5;
+            wave.Parameters["Vertical Phase"].Value = 1.0;
+
+        } catch (Exception ex) {
+            MessageBox.Show("Error: " + ex.Message);
+        }
+    }
+}
